@@ -95,16 +95,8 @@ const CreateOrEditProducts = () => {
                   productQuantity: item.Quantity,
                 });
               }}
-              onLongPress={() => {
-                handleOnDeleteData(item.id);
-              }}
               on
-              style={({ pressed }) => [
-                styles.SingleItem,
-                pressed
-                  ? { backgroundColor: 'red' }
-                  : { backgroundColor: '#dadada' },
-              ]}
+              style={[styles.SingleItem]}
             >
               {/* For Product details */}
               <View style={styles.ProductDetails}>
@@ -235,11 +227,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: '#ffffff',
-  },
-  text: {
-    fontSize: 24,
-    color: '#000000',
-    fontWeight: 'bold',
+    borderRadius: 20
   },
   text: {
     fontSize: 24,
@@ -247,7 +235,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   ProductContainer: {
-    paddingVertical: '2%',
+    paddingVertical: '1%',
     paddingHorizontal: '2%',
     borderRadius: 20,
   },
@@ -257,6 +245,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: 10,
+    backgroundColor: '#b9b9b98d',
   },
   ProductDetails: {
     borderRadius: 12,
