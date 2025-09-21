@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const CreateProduct = () => {
+const NoDataAvailable = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>CreateProduct</Text>
+      <Text style={styles.text}>No Products Added!!</Text>
     </View>
   );
 };
 
-export default CreateProduct;
+export default NoDataAvailable;
 
 const styles = StyleSheet.create({
   container: {

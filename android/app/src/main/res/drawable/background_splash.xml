@@ -3,10 +3,12 @@
     <item android:drawable="@color/splashscreen_bg" />
     <item 
         android:gravity="center"
-        android:width="200dp"
-        android:height="200dp">
+        android:width="150dp"
+        android:height="150dp">
         <bitmap
             android:src="@drawable/screen"
-            android:gravity="fill_horizontal|fill_vertical" />
+            android:gravity="center"
+            android:filter="true"
+            android:antialias="true" />
     </item>
 </layer-list>

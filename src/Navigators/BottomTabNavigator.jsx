@@ -5,18 +5,17 @@ import Dashboard from '../Screens/Dashboard';
 import LimitedProducts from '../Screens/LimitedProducts';
 import CreateOrEditProducts from '../Screens/CreateOrEditProducts';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-const BottomTabsNav = ({ stackButtons }) => {
-  const [activeTab, setActiveTab] = useState(0);
+
+const BottomTabsNav = () => {
   const Tab = createBottomTabNavigator();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         headerShown: true,
         tabBarActiveTintColor: {},
         tabBarActiveBackgroundColor: '#ffffff',
@@ -32,18 +31,9 @@ const BottomTabsNav = ({ stackButtons }) => {
         },
         tabBarButton: props => {
           const { children, onPress } = props;
-          const RouteName = [
-            'All Products',
-            'Limited Products',
-            'Create or Edit Products',
-          ];
-
-          const tabIndex = RouteName.indexOf(route.name);
-          const isSelected = activeTab === tabIndex;
           return (
             <Pressable
               onPress={() => {
-                setActiveTab(tabIndex);
                 onPress();
               }}
               style={{
@@ -52,7 +42,6 @@ const BottomTabsNav = ({ stackButtons }) => {
                 borderRadius: 15,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: isSelected ? '#ffffff' : 'transparent',
               }}
             >
               {children}

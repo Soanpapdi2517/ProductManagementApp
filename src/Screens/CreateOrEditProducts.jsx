@@ -1,4 +1,5 @@
 import {
+  Alert,
   FlatList,
   Pressable,
   StyleSheet,
@@ -7,176 +8,17 @@ import {
   View,
 } from 'react-native';
 import React, { useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setData } from '../Slices/dataSlice';
+import NoDataAvailable from '../Common/NoDataAvailable';
+import DoublePressable from '../CustomButtons/onDoublePress';
 const CreateOrEditProducts = () => {
-  const [ProductsData, setProductsData] = useState([
-    {
-      id: 1,
-      ProductName: 'Aalo',
-      Quantity: 50,
-      Quality: 'Good',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 2,
-      ProductName: 'Tomato',
-      Quantity: 30,
-      Quality: 'Fresh',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 3,
-      ProductName: 'Onion',
-      Quantity: 40,
-      Quality: 'Premium',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 4,
-      ProductName: 'Potato',
-      Quantity: 60,
-      Quality: 'Good',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 5,
-      ProductName: 'Carrot',
-      Quantity: 25,
-      Quality: 'Fresh',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 6,
-      ProductName: 'Cabbage',
-      Quantity: 20,
-      Quality: 'Good',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 7,
-      ProductName: 'Spinach',
-      Quantity: 15,
-      Quality: 'Fresh',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 8,
-      ProductName: 'Capsicum',
-      Quantity: 10,
-      Quality: 'Premium',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 9,
-      ProductName: 'Cauliflower',
-      Quantity: 18,
-      Quality: 'Good',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 10,
-      ProductName: 'Brinjal',
-      Quantity: 22,
-      Quality: 'Fresh',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 11,
-      ProductName: 'Cucumber',
-      Quantity: 12,
-      Quality: 'Premium',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 12,
-      ProductName: 'Pumpkin',
-      Quantity: 35,
-      Quality: 'Good',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 13,
-      ProductName: 'Radish',
-      Quantity: 15,
-      Quality: 'Fresh',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 14,
-      ProductName: 'Beetroot',
-      Quantity: 20,
-      Quality: 'Premium',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 15,
-      ProductName: 'Garlic',
-      Quantity: 8,
-      Quality: 'Good',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 16,
-      ProductName: 'Ginger',
-      Quantity: 5,
-      Quality: 'Fresh',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 17,
-      ProductName: 'Lemon',
-      Quantity: 10,
-      Quality: 'Premium',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 18,
-      ProductName: 'Apple',
-      Quantity: 25,
-      Quality: 'Fresh',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 19,
-      ProductName: 'Banana',
-      Quantity: 30,
-      Quality: 'Good',
-      QuantityType: 'inKgs',
-    },
-    {
-      id: 20,
-      ProductName: 'Mango',
-      Quantity: 40,
-      Quality: 'Premium',
-      QuantityType: 'inKgs',
-    },
-    // Example of a pieces-based product
-    {
-      id: 21,
-      ProductName: 'Kurkure',
-      Quantity: 50,
-      Quality: 'Fresh',
-      QuantityType: 'inPcs',
-    },
-    {
-      id: 22,
-      ProductName: 'Cold Drink Bottle',
-      Quantity: 24,
-      Quality: 'Premium',
-      QuantityType: 'inPcs',
-    },
-    {
-      id: 23,
-      ProductName: 'Chocolate',
-      Quantity: 100,
-      Quality: 'Good',
-      QuantityType: 'inPcs',
-    },
-  ]);
+  const dispatch = useDispatch();
+  const { data } = useSelector(state => state.data);
+  const [ProductsData, setProductsData] = useState(data);
   const [EditOpen, setEditOpen] = useState({ id: null, onWhichClicked: false });
   const [dataEditing, setDataEditing] = useState({
     id: null,
@@ -186,27 +28,38 @@ const CreateOrEditProducts = () => {
   });
   const handleOnChangeData = (field, value) => {
     let processedValue = value;
-
     // Convert quantity to number
     if (field === 'productQuantity') {
       processedValue = value === '' ? 0 : Number(value);
     }
-
+    if (field === 'productQuantity' && value === '0') {
+    }
     setDataEditing(prev => ({ ...prev, [field]: processedValue }));
   };
 
   const handleOnSubmitData = () => {
+    if (
+      !dataEditing.productName ||
+      !dataEditing.productQuality ||
+      !dataEditing.productQuantity
+    ) {
+      return <Alert>Product Details cannot be Empty</Alert>;
+    }
     const NewProductsData = ProductsData.map(item =>
       item.id === dataEditing.id
         ? {
             ...item,
             ProductName: dataEditing.productName,
-            Quantity: dataEditing.productQuantity,
+            Quantity:
+              dataEditing.productQuantity === 0
+                ? 1
+                : dataEditing.productQuantity,
             Quality: dataEditing.productQuality,
           }
         : item,
     );
     setProductsData(NewProductsData);
+    dispatch(setData(NewProductsData));
     setDataEditing({
       id: null,
       productName: null,
@@ -214,6 +67,17 @@ const CreateOrEditProducts = () => {
       productQuality: null,
     });
   };
+
+  const handleOnDeleteData = id => {
+    const afterDeleteProducts = ProductsData.filter(item => item.id !== id);
+    setProductsData(afterDeleteProducts);
+    dispatch(setData(afterDeleteProducts));
+    console.log(data);
+  };
+
+  if (data.length === 0) {
+    return <NoDataAvailable />;
+  }
   return (
     <View style={[styles.container]}>
       <View style={styles.ProductContainer}>
@@ -221,7 +85,27 @@ const CreateOrEditProducts = () => {
           data={ProductsData}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.SingleItem}>
+            <DoublePressable
+              onDoublePress={() => {
+                setEditOpen({ id: item.id, onWhichClicked: true });
+                setDataEditing({
+                  id: item.id,
+                  productName: item.ProductName,
+                  productQuality: item.Quality,
+                  productQuantity: item.Quantity,
+                });
+              }}
+              onLongPress={() => {
+                handleOnDeleteData(item.id);
+              }}
+              on
+              style={({ pressed }) => [
+                styles.SingleItem,
+                pressed
+                  ? { backgroundColor: 'red' }
+                  : { backgroundColor: '#dadada' },
+              ]}
+            >
               {/* For Product details */}
               <View style={styles.ProductDetails}>
                 {/* Product Name */}
@@ -229,7 +113,7 @@ const CreateOrEditProducts = () => {
                   <Text style={styles.ProductHeadingName}>Product</Text>
                   {EditOpen.id === item.id && EditOpen.onWhichClicked ? (
                     <TextInput
-                      style={styles.ProductDataName}
+                      style={[styles.ProductDataName, { color: '#000000' }]}
                       value={dataEditing.productName}
                       onChangeText={value =>
                         handleOnChangeData('productName', value)
@@ -251,7 +135,7 @@ const CreateOrEditProducts = () => {
                   {EditOpen.id === item.id && EditOpen.onWhichClicked ? (
                     <TextInput
                       keyboardType="numeric"
-                      style={styles.ProductDataQuantity}
+                      style={[styles.ProductDataQuantity, { color: '#000000' }]}
                       value={
                         dataEditing.productQuantity !== null
                           ? dataEditing.productQuantity.toString()
@@ -272,7 +156,7 @@ const CreateOrEditProducts = () => {
                   <Text style={styles.ProductHeadingQuality}>Quality</Text>
                   {EditOpen.id === item.id && EditOpen.onWhichClicked ? (
                     <TextInput
-                      style={styles.ProductDataQuality}
+                      style={[styles.ProductDataQuality, { color: '#00000' }]}
                       value={dataEditing.productQuality}
                       onChangeText={value =>
                         handleOnChangeData('productQuality', value)
@@ -327,12 +211,14 @@ const CreateOrEditProducts = () => {
                     styles.deleteBtn,
                     pressed && { backgroundColor: '#c70e3fff' },
                   ]}
-                  onPress={() => {}}
+                  onPress={() => {
+                    handleOnDeleteData(item.id);
+                  }}
                 >
                   <MaterialIcons name="delete" size={20} />
                 </Pressable>
               </View>
-            </View>
+            </DoublePressable>
           )}
           ItemSeparatorComponent={() => <View style={{ height: 2 }}></View>}
         />
@@ -367,15 +253,13 @@ const styles = StyleSheet.create({
   },
   SingleItem: {
     width: '100%',
-    backgroundColor: '#dadada',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: 10,
   },
   ProductDetails: {
-    borderRadius: 10,
-    backgroundColor: '#dadada95',
+    borderRadius: 12,
     width: '80%',
     flexDirection: 'row',
     paddingHorizontal: '2%',
@@ -394,16 +278,16 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   ProductHeadingName: { textAlign: 'left', color: '#181515e0' },
-  ProductDataName: { fontSize: 18, fontWeight: 'bold', textAlign: 'left' },
+  ProductDataName: { fontSize: 17, fontWeight: 'bold', textAlign: 'left' },
   ProductHeadingQuantity: { textAlign: 'center', color: '#181515e0' },
   ProductDataQuantity: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   ProductHeadingQuality: { textAlign: 'right', color: '#181515e0' },
   ProductDataQuality: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     alignItems: 'flex-start',
   },
@@ -422,6 +306,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 5,
     justifyContent: 'flex-start',
-    width: "20%"
+    width: '20%',
   },
 });
