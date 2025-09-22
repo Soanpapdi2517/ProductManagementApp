@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { resumeDownload, RNFS } from 'react-native-fs';
+import RNFS from 'react-native-fs';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useState } from 'react';
 import Upload from 'react-native-vector-icons/Feather';
@@ -17,18 +17,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { setFocusedData } from '../../Slices/dataSlice';
 const CreateProduct = () => {
   const { data } = useSelector(state => state.data);
-  const [quantityData, setQuantityData] = useState({
-    dropDownOpen: false,
-    value: null,
-    items: [
-      { label: 'inKgs', value: 'inKgs' },
-      { label: 'inGms', value: 'inGms' },
-      { label: 'inPcs', value: 'inPcs' },
-      { label: 'inMtrs', value: 'inMtrs' },
-      { label: 'inCms', value: 'inCms' },
-      { label: 'inOunces', value: 'inOunces' },
-    ],
-  });
 
   // Quantity Type Data DropDown (
   const [dropDownOpenQuantityType, setdropDownOpenQuantityType] =
@@ -73,7 +61,6 @@ const CreateProduct = () => {
       response => {
         if (!response.didCancel && !response.errorCode) {
           const uri = response.assets[0].uri;
-          console.log('picked image', uri);
           saveImage(uri);
         }
       },
@@ -82,10 +69,18 @@ const CreateProduct = () => {
   const saveImage = async uri => {
     try {
       const fileName = `product_${Date.now()}.jpg`;
-      const destPath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+      const imagesDir = `${RNFS.DocumentDirectoryPath}/images`;
+      const destPath = `${imagesDir}/${fileName}`;
+
+      // Ensure images directory exists
+      const dirExists = await RNFS.exists(imagesDir);
+      if (!dirExists) {
+        await RNFS.mkdir(imagesDir);
+      }
+
       await RNFS.copyFile(uri, destPath);
       // Will call create image function
-      setNewProductData(prev => ({ ...prev, image: uri }));
+      setNewProductData(prev => ({ ...prev, image: `file://${destPath}` }));
       console.log(newProductData);
     } catch (error) {
       console.log('Error while saving the image', error);
@@ -104,9 +99,8 @@ const CreateProduct = () => {
       Quality: currenValueQuality,
       QuantityType: currentQuantityTypeValue,
     }));
-    setFocusedData(newProductData);
-    console.log(newProductData);
   };
+
   return (
     <ScrollView
       style={styles.container}
@@ -171,9 +165,10 @@ const CreateProduct = () => {
               setValue={setcurrenValueQuality}
               setItems={setItemsQuality}
               placeholder="Select Quality"
-              zIndex={2000} // Higher z-index for quality dropdown
+              zIndex={1000} // Higher z-index for quality dropdown
               style={styles.dropdown}
               dropDownContainerStyle={styles.dropdownContainer}
+              listMode="SCROLLVIEW" // Fix VirtualizedList nesting warning
             />
           </View>
           <View style={styles.ProductNameContainer}>
@@ -227,12 +222,48 @@ const CreateProduct = () => {
               zIndex={1000} // Lower z-index for quantity type dropdown
               style={styles.dropdown}
               dropDownContainerStyle={styles.dropdownContainer}
+              listMode="SCROLLVIEW" // Fix VirtualizedList nesting warning
             />
           </View>
         </View>
 
         <View style={styles.saveAndCancelButtons}>
-          <Pressable style={[styles.actionButtons, { backgroundColor: 'red' }]}>
+          <Pressable
+            onPress={() => {
+              Alert.alert(
+                'Are You Sure?',
+                "You Don't want to Create this data",
+                [
+                  {
+                    text: 'No',
+                    onPress: () => console.log('user pressed no'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Yes',
+                    onPress: () => {
+                      setNewProductData({
+                        id: data.length + 1,
+                        image: null,
+                        productName: null,
+                        Quality: null,
+                        Quantity: null,
+                        QuantityType: null,
+                        Price: null,
+                      });
+                      setCurrentQuantityTypeValue('');
+                      setcurrenValueQuality('');
+                    },
+                    style: 'destructive',
+                  },
+                ],
+                {
+                  cancelable: true,
+                },
+              );
+            }}
+            style={[styles.actionButtons, { backgroundColor: 'red' }]}
+          >
             <Text style={styles.btntext}>Cancel</Text>
           </Pressable>
           <View style={{ width: '15%' }}></View>
