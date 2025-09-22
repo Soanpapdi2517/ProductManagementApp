@@ -10,14 +10,10 @@ const Dashboard = () => {
     return <NoDataAvailable />;
   }
   return (
-    <View
-      style={[
-        styles.container,
-        { paddingTop: insets.top, paddingBottom: insets.bottom },
-      ]}
-    >
+    <View style={[styles.container]}>
       <View style={styles.ProductContainer}>
         <FlatList
+          style={{ borderRadius: 15 }}
           data={data}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (

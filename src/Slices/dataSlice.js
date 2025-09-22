@@ -2,6 +2,7 @@ import { dummyData } from '../Data/dummyData';
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   data: dummyData,
+  focusedData: null,
 };
 
 const dataSlice = createSlice({
@@ -11,8 +12,11 @@ const dataSlice = createSlice({
     setData: (state, value) => {
       state.data = value.payload;
     },
+    setFocusedData: (state, value) => {
+      state.focusedData = value.payload;
+    },
   },
 });
 
-export const { setData } = dataSlice.actions;
+export const { setData, setFocusedData } = dataSlice.actions;
 export default dataSlice.reducer;

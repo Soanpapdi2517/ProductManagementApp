@@ -17,6 +17,7 @@ const BottomTabsNav = () => {
     <Tab.Navigator
       screenOptions={() => ({
         headerShown: true,
+        headerStyle: { borderRadius: 20 },
         tabBarActiveTintColor: {},
         tabBarActiveBackgroundColor: '#ffffff',
         tabBarStyle: {

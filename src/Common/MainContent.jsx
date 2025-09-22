@@ -10,7 +10,7 @@ const MainContent = () => {
   // color scheme dark or light
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Main Tabs'>
+      <Stack.Navigator initialRouteName="Main Tabs">
         <Stack.Screen
           name="Create Products"
           component={CreateProduct}
@@ -21,7 +21,7 @@ const MainContent = () => {
         <Stack.Screen
           name="Main Tabs"
           component={BottomTabsNav}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, headerStyle:{borderRadius: 20} }}
         />
       </Stack.Navigator>
     </NavigationContainer>

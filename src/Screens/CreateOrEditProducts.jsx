@@ -82,11 +82,12 @@ const CreateOrEditProducts = () => {
     <View style={[styles.container]}>
       <View style={styles.ProductContainer}>
         <FlatList
+          style={{ borderRadius: 15 }}
           data={ProductsData}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
-            <DoublePressable
-              onDoublePress={() => {
+            <Pressable
+              onLongPress={() => {
                 setEditOpen({ id: item.id, onWhichClicked: true });
                 setDataEditing({
                   id: item.id,
@@ -95,7 +96,7 @@ const CreateOrEditProducts = () => {
                   productQuantity: item.Quantity,
                 });
               }}
-              on
+              
               style={[styles.SingleItem]}
             >
               {/* For Product details */}
@@ -210,7 +211,7 @@ const CreateOrEditProducts = () => {
                   <MaterialIcons name="delete" size={20} />
                 </Pressable>
               </View>
-            </DoublePressable>
+            </Pressable>
           )}
           ItemSeparatorComponent={() => <View style={{ height: 2 }}></View>}
         />
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: '#ffffff',
-    borderRadius: 20
+    borderRadius: 20,
   },
   text: {
     fontSize: 24,
