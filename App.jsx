@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   StatusBar,
   StyleSheet,
-  useColorScheme,
   View,
   Animated,
   Image,
@@ -11,12 +10,9 @@ import {
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import MainContent from './src/Common/MainContent';
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './src/Reducer/index';
-const store = configureStore({
-  reducer: rootReducer,
-});
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './src/Store/store';
 
 const AnimatedSplashScreen = ({ onFinish }) => {
   const scaleValue = new Animated.Value(0.8);
@@ -81,7 +77,6 @@ const AnimatedSplashScreen = ({ onFinish }) => {
 };
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
@@ -95,14 +90,16 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
-        <StatusBar
-          hidden={false}
-          backgroundColor="#ffffff" // Android only
-          barStyle="dark-content"
-        />
-        <MainContent />
-      </SafeAreaProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <StatusBar
+            hidden={false}
+            backgroundColor="#ffffff" // Android only
+            barStyle="dark-content"
+          />
+          <MainContent />
+        </SafeAreaProvider>
+      </PersistGate>
     </Provider>
   );
 };

@@ -1,7 +1,6 @@
-import { dummyData } from '../Data/dummyData';
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
-  data: dummyData,
+  data: null,
   focusedData: null,
 };
 

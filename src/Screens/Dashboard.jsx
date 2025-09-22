@@ -1,11 +1,17 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import NoDataAvailable from '../Common/NoDataAvailable';
+import { setFocusedData } from '../Slices/dataSlice';
+import { useNavigation } from '@react-navigation/native';
 const Dashboard = () => {
-  const insets = useSafeAreaInsets();
-  let { data } = useSelector(state => state.data);
+  let { data, focusedData } = useSelector(state => state.data);
+  console.log('came back to dashboard', focusedData);
+
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   if (data.length === 0) {
     return <NoDataAvailable />;
   }
@@ -19,10 +25,25 @@ const Dashboard = () => {
           data={data}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
-            <View
-              style={[
+            <Pressable
+              onPress={() => {
+                dispatch(setFocusedData(item));
+                console.log(focusedData);
+                navigation.navigate('Product Details');
+              }}
+              style={({ pressed }) => [
                 styles.ProductDetails,
                 {
+                  backgroundColor:
+                    item.Quantity > 40
+                      ? '#27f107ff'
+                      : item.Quantity > 15
+                      ? '#e5f107ff'
+                      : 'rgba(244, 3, 3, 0.67)',
+
+                  borderRadius: 12,
+                },
+                pressed && {
                   backgroundColor:
                     item.Quantity > 40
                       ? 'green'
@@ -55,7 +76,7 @@ const Dashboard = () => {
                 <Text style={styles.ProductHeadingQuality}>Quality</Text>
                 <Text style={styles.ProductDataQuality}>{item.Quality}</Text>
               </View>
-            </View>
+            </Pressable>
           )}
           ItemSeparatorComponent={() => <View style={{ height: 2 }}></View>}
         />

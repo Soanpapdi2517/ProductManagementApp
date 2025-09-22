@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import {
-  Modal,
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
+import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
-const CustomAlert = ({ visible, onClose, onConfirm }) => {
+const CustomAlert = ({
+  visible,
+  onClose,
+  onConfirm,
+  title = 'Delete product?',
+  message = 'You Want to delete this Product',
+  cancelBtnText = null,
+  confirmBtnText = 'Yes',
+}) => {
   return (
     <Modal
       transparent={true}
@@ -17,15 +19,15 @@ const CustomAlert = ({ visible, onClose, onConfirm }) => {
     >
       <View style={styles.overlay}>
         <View style={styles.alertBox}>
-          <Text style={styles.title}>Delete Product</Text>
-          <Text style={styles.message}>
-            Are you sure you want to delete this product?
-          </Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.message}>{message}</Text>
 
           <View style={styles.buttons}>
-            <Pressable style={[styles.btn, styles.cancel]} onPress={onClose}>
-              <Text style={styles.btnText}>No</Text>
-            </Pressable>
+            {cancelBtnText && (
+              <Pressable style={[styles.btn, styles.cancel]} onPress={onClose}>
+                <Text style={styles.btnText}>{cancelBtnText}</Text>
+              </Pressable>
+            )}
             <Pressable
               style={[styles.btn, styles.confirm]}
               onPress={() => {
@@ -33,7 +35,7 @@ const CustomAlert = ({ visible, onClose, onConfirm }) => {
                 onClose();
               }}
             >
-              <Text style={styles.btnText}>Yes</Text>
+              <Text style={styles.btnText}>{confirmBtnText}</Text>
             </Pressable>
           </View>
         </View>

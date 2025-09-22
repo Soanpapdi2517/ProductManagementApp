@@ -14,11 +14,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../Slices/dataSlice';
 import NoDataAvailable from '../Common/NoDataAvailable';
-import DoublePressable from '../CustomButtons/onDoublePress';
 const CreateOrEditProducts = () => {
   const dispatch = useDispatch();
   const { data } = useSelector(state => state.data);
-  const [ProductsData, setProductsData] = useState(data);
   const [EditOpen, setEditOpen] = useState({ id: null, onWhichClicked: false });
   const [dataEditing, setDataEditing] = useState({
     id: null,
@@ -45,7 +43,7 @@ const CreateOrEditProducts = () => {
     ) {
       return <Alert>Product Details cannot be Empty</Alert>;
     }
-    const NewProductsData = ProductsData.map(item =>
+    const NewProductsData = data.map(item =>
       item.id === dataEditing.id
         ? {
             ...item,
@@ -58,7 +56,6 @@ const CreateOrEditProducts = () => {
           }
         : item,
     );
-    setProductsData(NewProductsData);
     dispatch(setData(NewProductsData));
     setDataEditing({
       id: null,
@@ -69,10 +66,8 @@ const CreateOrEditProducts = () => {
   };
 
   const handleOnDeleteData = id => {
-    const afterDeleteProducts = ProductsData.filter(item => item.id !== id);
-    setProductsData(afterDeleteProducts);
+    const afterDeleteProducts = data.filter(item => item.id !== id);
     dispatch(setData(afterDeleteProducts));
-    console.log(data);
   };
 
   if (data.length === 0) {
@@ -82,10 +77,10 @@ const CreateOrEditProducts = () => {
     <View style={[styles.container]}>
       <View style={styles.ProductContainer}>
         <FlatList
-        bounces={true}
-        showsVerticalScrollIndicator={true}
+          bounces={true}
+          showsVerticalScrollIndicator={true}
           style={{ borderRadius: 15 }}
-          data={ProductsData}
+          data={data}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
             <Pressable
@@ -98,7 +93,6 @@ const CreateOrEditProducts = () => {
                   productQuantity: item.Quantity,
                 });
               }}
-              
               style={[styles.SingleItem]}
             >
               {/* For Product details */}
@@ -215,7 +209,7 @@ const CreateOrEditProducts = () => {
               </View>
             </Pressable>
           )}
-          ItemSeparatorComponent={() => <View style={{ height: 2 }}></View>}
+          ItemSeparatorComponent={() => <View style={{ height: 5 }}></View>}
         />
       </View>
     </View>

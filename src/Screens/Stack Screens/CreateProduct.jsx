@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -8,21 +7,23 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import RNFS from 'react-native-fs';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useState } from 'react';
 import Upload from 'react-native-vector-icons/Feather';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { setFocusedData } from '../../Slices/dataSlice';
+import CustomAlert from '../../Modal/CustomModal';
+import { useNavigation } from '@react-navigation/native';
+import { setData } from '../../Slices/dataSlice';
 const CreateProduct = () => {
-  const { data } = useSelector(state => state.data);
-
+  let { data } = useSelector(state => state.data);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   // Quantity Type Data DropDown (
   const [dropDownOpenQuantityType, setdropDownOpenQuantityType] =
     useState(false);
   const [currentQuantityTypeValue, setCurrentQuantityTypeValue] = useState('');
-  console.log(currentQuantityTypeValue.slice(2, -1));
   const [quantityTypeItems, setQuantityTypeItems] = useState([
     { label: 'inKgs', value: 'inKgs' },
     { label: 'inGms', value: 'inGms' },
@@ -43,12 +44,26 @@ const CreateProduct = () => {
     { label: 'Premium', value: 'Premium' },
   ]);
   // )
-
+  // modal open close useState
+  const [Modal, setModal] = useState({
+    modalState: false,
+    modalFor: null,
+  });
   const [inputOnFocus, setInputOnFocus] = useState('');
+  // Generate unique ID
+  const generateUniqueId = () => {
+    const existingIds = data.map(item => item.id);
+    let newId = 1;
+    while (existingIds.includes(newId)) {
+      newId++;
+    }
+    return newId;
+  };
+
   const [newProductData, setNewProductData] = useState({
-    id: data.length + 1,
+    id: generateUniqueId(),
     image: null,
-    productName: null,
+    ProductName: null,
     Quality: null,
     Quantity: null,
     QuantityType: null,
@@ -81,14 +96,26 @@ const CreateProduct = () => {
       await RNFS.copyFile(uri, destPath);
       // Will call create image function
       setNewProductData(prev => ({ ...prev, image: `file://${destPath}` }));
-      console.log(newProductData);
     } catch (error) {
       console.log('Error while saving the image', error);
     }
   };
+  // handle on Cancel button yes
+  const handleOnCancelBtn = () => {
+    setNewProductData({
+      id: generateUniqueId(),
+      image: null,
+      ProductName: null,
+      Quality: null,
+      Quantity: null,
+      QuantityType: null,
+      Price: null,
+    });
+    setCurrentQuantityTypeValue('');
+    setcurrenValueQuality('');
+  };
 
   // handle on Change
-
   const handleOnChangeValue = (field, value) => {
     if (field === 'Quantity' || field === 'Price') {
       value = value === '' ? 0 : Number(value);
@@ -100,7 +127,31 @@ const CreateProduct = () => {
       QuantityType: currentQuantityTypeValue,
     }));
   };
-
+  // handle on submit
+  const handleOnSubmitData = () => {
+    const { image, Quality, Quantity, QuantityType, ProductName, Price } =
+      newProductData;
+    if (
+      !image ||
+      !Quality ||
+      !Quantity ||
+      !QuantityType ||
+      !ProductName ||
+      !Price
+    ) {
+      return setModal({ modalState: true, modalFor: 'save' });
+    } else {
+      // Ensure unique ID before adding
+      const productWithUniqueId = {
+        ...newProductData,
+        id: generateUniqueId(),
+      };
+      const updatedData = [...data, productWithUniqueId];
+      console.log(updatedData);
+      dispatch(setData(updatedData));
+      navigation.goBack();
+    }
+  };
   return (
     <ScrollView
       style={styles.container}
@@ -122,7 +173,6 @@ const CreateProduct = () => {
           ]}
           onPress={() => {
             pickImage();
-            console.log('clicked');
           }}
         >
           <View style={styles.uploadImageContainer}>
@@ -140,7 +190,7 @@ const CreateProduct = () => {
           <View style={styles.ProductNameContainer}>
             <Text style={styles.ProductLabelInput}>Product Name</Text>
             <TextInput
-              onChangeText={value => handleOnChangeValue('productName', value)}
+              onChangeText={value => handleOnChangeValue('ProductName', value)}
               style={[
                 styles.ProductInputContainer,
                 inputOnFocus === 'product_name' && styles.onInputFocus,
@@ -148,7 +198,7 @@ const CreateProduct = () => {
               onFocus={() => setInputOnFocus('product_name')}
               onBlur={() => setInputOnFocus('')}
               value={
-                newProductData.productName ? newProductData.productName : ''
+                newProductData.ProductName ? newProductData.ProductName : ''
               }
               placeholder="Enter the Product's Name"
               placeholderTextColor={'#000000ff'}
@@ -161,21 +211,20 @@ const CreateProduct = () => {
               open={dropDownOpenQuality}
               value={currenValueQuality}
               items={itemsQuality}
-              setOpen={setdropDownOpenQuality}
+              setOpen={!dropDownOpenQuantityType && setdropDownOpenQuality}
               setValue={setcurrenValueQuality}
               setItems={setItemsQuality}
               placeholder="Select Quality"
-              zIndex={1000} // Higher z-index for quality dropdown
+              zIndex={2000} // Higher z-index for quality dropdown
               style={styles.dropdown}
               dropDownContainerStyle={styles.dropdownContainer}
+              textStyle={styles.dropdownText}
+              labelStyle={styles.dropdownItem}
               listMode="SCROLLVIEW" // Fix VirtualizedList nesting warning
             />
           </View>
           <View style={styles.ProductNameContainer}>
-            <Text style={styles.ProductLabelInput}>
-              Product's Quantity {'in ' + currentQuantityTypeValue.slice(2, -1)}
-              s
-            </Text>
+            <Text style={styles.ProductLabelInput}>Product's Quantity</Text>
             <TextInput
               keyboardType="numeric"
               style={[
@@ -188,6 +237,25 @@ const CreateProduct = () => {
               onBlur={() => setInputOnFocus('')}
               placeholder="Enter the Product's Quantity"
               placeholderTextColor={'#000000ff'}
+            />
+          </View>
+
+          <View style={styles.ProductNameContainer}>
+            <Text style={styles.ProductLabelInput}>Quantity Type</Text>
+            <DropDownPicker
+              open={dropDownOpenQuantityType}
+              value={currentQuantityTypeValue}
+              items={quantityTypeItems}
+              setOpen={!dropDownOpenQuality && setdropDownOpenQuantityType}
+              setValue={setCurrentQuantityTypeValue}
+              setItems={setQuantityTypeItems}
+              placeholder="Select Quantity Type"
+              zIndex={1000} // Lower z-index for quantity type dropdown
+              style={styles.dropdown}
+              dropDownContainerStyle={styles.dropdownContainer}
+              textStyle={styles.dropdownText}
+              labelStyle={styles.dropdownItem}
+              listMode="SCROLLVIEW" // Fix VirtualizedList nesting warning
             />
           </View>
           <View style={styles.ProductNameContainer}>
@@ -209,70 +277,58 @@ const CreateProduct = () => {
               placeholderTextColor={'#000000ff'}
             />
           </View>
-          <View style={styles.ProductNameContainer}>
-            <Text style={styles.ProductLabelInput}>Quantity Type</Text>
-            <DropDownPicker
-              open={dropDownOpenQuantityType}
-              value={currentQuantityTypeValue}
-              items={quantityTypeItems}
-              setOpen={setdropDownOpenQuantityType}
-              setValue={setCurrentQuantityTypeValue}
-              setItems={setQuantityTypeItems}
-              placeholder="Select Quantity Type"
-              zIndex={1000} // Lower z-index for quantity type dropdown
-              style={styles.dropdown}
-              dropDownContainerStyle={styles.dropdownContainer}
-              listMode="SCROLLVIEW" // Fix VirtualizedList nesting warning
-            />
-          </View>
         </View>
 
         <View style={styles.saveAndCancelButtons}>
           <Pressable
             onPress={() => {
-              Alert.alert(
-                'Are You Sure?',
-                "You Don't want to Create this data",
-                [
-                  {
-                    text: 'No',
-                    onPress: () => console.log('user pressed no'),
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'Yes',
-                    onPress: () => {
-                      setNewProductData({
-                        id: data.length + 1,
-                        image: null,
-                        productName: null,
-                        Quality: null,
-                        Quantity: null,
-                        QuantityType: null,
-                        Price: null,
-                      });
-                      setCurrentQuantityTypeValue('');
-                      setcurrenValueQuality('');
-                    },
-                    style: 'destructive',
-                  },
-                ],
-                {
-                  cancelable: true,
-                },
-              );
+              setModal({ modalState: true, modalFor: 'cancel' });
             }}
-            style={[styles.actionButtons, { backgroundColor: 'red' }]}
+            style={({ pressed }) => [
+              styles.actionButtons,
+              pressed
+                ? { backgroundColor: 'red' }
+                : { backgroundColor: '#ec3838ff' },
+            ]}
           >
             <Text style={styles.btntext}>Cancel</Text>
           </Pressable>
           <View style={{ width: '15%' }}></View>
           <Pressable
-            style={[styles.actionButtons, { backgroundColor: 'green' }]}
+            onPress={() => {
+              handleOnSubmitData();
+            }}
+            style={({ pressed }) => [
+              styles.actionButtons,
+              pressed
+                ? { backgroundColor: '#01ac01ff' }
+                : { backgroundColor: '#07e707ff' },
+            ]}
           >
             <Text style={styles.btntext}>Save</Text>
           </Pressable>
         </View>
+        {Modal.modalState && Modal.modalFor === 'cancel' && (
+          <CustomAlert
+            title="Are You Sure?"
+            message="You don't want to create the Product"
+            onClose={() => setModal(false)}
+            cancelBtnText="No"
+            onConfirm={() => {
+              handleOnCancelBtn();
+            }}
+          />
+        )}
+        {Modal.modalState && Modal.modalFor === 'save' && (
+          <CustomAlert
+            title="Input Fields are Empty!!"
+            message="Fill Fields Correctly"
+            onClose={() => setModal(false)}
+            onConfirm={() => {
+              setModal({ modalState: false });
+            }}
+          />
+        )}
       </View>
     </ScrollView>
   );
@@ -336,8 +392,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#dadada',
   },
   dropdownContainer: {
-    fontSize: 40,
     borderColor: '#565656ff',
+  },
+  dropdownText: {
+    fontSize: 17,
+    color: '#000000',
+  },
+  dropdownItem: {
+    fontSize: 17,
+    color: '#000000',
   },
   saveAndCancelButtons: {
     flexDirection: 'row',
@@ -353,6 +416,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: '4%',
+    elevation: 10,
   },
   btntext: {
     fontSize: 20,
