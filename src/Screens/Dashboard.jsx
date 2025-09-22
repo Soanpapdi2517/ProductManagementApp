@@ -13,6 +13,8 @@ const Dashboard = () => {
     <View style={[styles.container]}>
       <View style={styles.ProductContainer}>
         <FlatList
+          bounces={true}
+          showsVerticalScrollIndicator={true}
           style={{ borderRadius: 15 }}
           data={data}
           keyExtractor={item => item.id.toString()}
