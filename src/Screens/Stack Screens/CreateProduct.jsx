@@ -15,9 +15,10 @@ import Upload from 'react-native-vector-icons/Feather';
 import DropDownPicker from 'react-native-dropdown-picker';
 import CustomAlert from '../../Modal/CustomModal';
 import { useNavigation } from '@react-navigation/native';
-import { setData } from '../../Slices/dataSlice';
+import { setData, updateData } from '../../Slices/dataSlice';
 const CreateProduct = () => {
   let { data } = useSelector(state => state.data);
+  console.log(typeof data);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   // Quantity Type Data DropDown (
@@ -54,7 +55,7 @@ const CreateProduct = () => {
   const generateUniqueId = () => {
     const existingIds = data.map(item => item.id);
     let newId = 1;
-    while (existingIds.includes(newId)) {
+    while (existingIds?.includes(newId)) {
       newId++;
     }
     return newId;
@@ -141,14 +142,7 @@ const CreateProduct = () => {
     ) {
       return setModal({ modalState: true, modalFor: 'save' });
     } else {
-      // Ensure unique ID before adding
-      const productWithUniqueId = {
-        ...newProductData,
-        id: generateUniqueId(),
-      };
-      const updatedData = [...data, productWithUniqueId];
-      console.log(updatedData);
-      dispatch(setData(updatedData));
+      dispatch(setData(newProductData));
       navigation.goBack();
     }
   };

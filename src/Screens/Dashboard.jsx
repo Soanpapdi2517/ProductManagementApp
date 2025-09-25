@@ -1,20 +1,19 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import NoDataAvailable from '../Common/NoDataAvailable';
 import { setFocusedData } from '../Slices/dataSlice';
 import { useNavigation } from '@react-navigation/native';
 const Dashboard = () => {
   let { data, focusedData } = useSelector(state => state.data);
-  console.log('came back to dashboard', focusedData);
 
+  console.log('came back to dashboard', data);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   if (data.length === 0) {
-    return <NoDataAvailable />;
+    return <NoDataAvailable text="No Products Added"/>;
   }
+
   return (
     <View style={[styles.container]}>
       <View style={styles.ProductContainer}>
@@ -59,15 +58,15 @@ const Dashboard = () => {
               <View style={styles.ProductNameContainer}>
                 <Text style={styles.ProductHeadingName}>Product</Text>
                 <Text style={styles.ProductDataName}>
-                  {item.ProductName.length > 7
-                    ? item.ProductName.slice(0, 7) + '...'
+                  {item.ProductName.length > 6
+                    ? item.ProductName.slice(0, 6) + '...'
                     : item.ProductName}
                 </Text>
               </View>
               {/* Product Quantity */}
               <View style={styles.ProductQuantityContainer}>
                 <Text style={styles.ProductHeadingQuantity}>
-                  Quantity({item.QuantityType})
+                  Qty({item.QuantityType})
                 </Text>
                 <Text style={styles.ProductDataQuantity}>{item.Quantity}</Text>
               </View>
@@ -75,6 +74,12 @@ const Dashboard = () => {
               <View style={styles.ProductQualityContainer}>
                 <Text style={styles.ProductHeadingQuality}>Quality</Text>
                 <Text style={styles.ProductDataQuality}>{item.Quality}</Text>
+              </View>
+              {/* Product Price */}
+              <View style={styles.ProductPriceContainer}>
+                <Text style={styles.ProductHeadingPrice}>Price</Text>
+
+                <Text style={styles.ProductDataPrice}>{item.Price}</Text>
               </View>
             </Pressable>
           )}
@@ -104,31 +109,61 @@ const styles = StyleSheet.create({
   },
   ProductDetails: {
     borderRadius: 12,
-    backgroundColor: '#dadada',
     width: '100%',
     flexDirection: 'row',
-    paddingHorizontal: '4%',
+    paddingHorizontal: '2%',
     paddingVertical: '3%',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    marginRight: 5,
   },
   ProductNameContainer: {
-    width: '30%',
+    width: '25%',
   },
   ProductQuantityContainer: {
-    justifyContent: 'flex-start',
-    marginRight: '5%',
+    width: '25%',
+    justifyContent: 'center',
   },
   ProductQualityContainer: {
-    width: '30%',
+    width: '25%',
+    alignItems: 'center',
   },
-  ProductHeadingName: { textAlign: 'left', color: '#000000e0' },
-  ProductDataName: { fontSize: 18, fontWeight: 'bold', textAlign: 'left' },
-  ProductHeadingQuantity: { textAlign: 'center', color: '#000000e0' },
+  ProductHeadingName: { textAlign: 'left', color: '#181515e0' },
+  ProductDataName: { fontSize: 17, fontWeight: 'bold', textAlign: 'left' },
+  ProductHeadingQuantity: { textAlign: 'center', color: '#181515e0' },
   ProductDataQuantity: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  ProductHeadingQuality: { textAlign: 'right', color: '#000000' },
-  ProductDataQuality: { fontSize: 18, fontWeight: 'bold', textAlign: 'right' },
+  ProductHeadingQuality: { textAlign: 'right', color: '#181515e0' },
+  ProductDataQuality: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    alignItems: 'flex-start',
+  },
+  deleteBtn: {
+    borderRadius: 50,
+    backgroundColor: '#ff0000ff',
+    padding: 5,
+  },
+  ProductButtons: {
+    flexDirection: 'row',
+    gap: 5,
+    justifyContent: 'flex-start',
+    width: '20%',
+  },
+  ProductPriceContainer: {
+    width: '25%',
+
+    alignItems: 'center',
+  },
+  ProductHeadingPrice: {
+    justifyContent: 'center',
+  },
+  ProductDataPrice: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

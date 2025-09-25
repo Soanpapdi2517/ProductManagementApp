@@ -4,75 +4,24 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Feather from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '../Slices/dataSlice';
 import NoDataAvailable from '../Common/NoDataAvailable';
 const CreateOrEditProducts = () => {
   const dispatch = useDispatch();
   const { data } = useSelector(state => state.data);
-  const [EditOpen, setEditOpen] = useState({ id: null, onWhichClicked: false });
-  const [dataEditing, setDataEditing] = useState({
-    id: null,
-    productName: null,
-    productQuantity: null,
-    productQuality: null,
-  });
-  const handleOnChangeData = (field, value) => {
-    let processedValue = value;
-    // Convert quantity to number
-    if (field === 'productQuantity') {
-      processedValue = value === '' ? 0 : Number(value);
-    }
-    if (field === 'productQuantity' && value === '0') {
-    }
-    setDataEditing(prev => ({ ...prev, [field]: processedValue }));
-  };
-
-  const handleOnSubmitData = () => {
-    if (
-      !dataEditing.productName ||
-      !dataEditing.productQuality ||
-      !dataEditing.productQuantity
-    ) {
-      return <Alert>Product Details cannot be Empty</Alert>;
-    }
-    const NewProductsData = data.map(item =>
-      item.id === dataEditing.id
-        ? {
-            ...item,
-            ProductName: dataEditing.productName,
-            Quantity:
-              dataEditing.productQuantity === 0
-                ? 1
-                : dataEditing.productQuantity,
-            Quality: dataEditing.productQuality,
-          }
-        : item,
-    );
-    dispatch(setData(NewProductsData));
-    setDataEditing({
-      id: null,
-      productName: null,
-      productQuantity: null,
-      productQuality: null,
-    });
-  };
-
+  if (data.length === 0) {
+    return <NoDataAvailable />;
+  }
   const handleOnDeleteData = id => {
     const afterDeleteProducts = data.filter(item => item.id !== id);
     dispatch(setData(afterDeleteProducts));
   };
 
-  if (data.length === 0) {
-    return <NoDataAvailable />;
-  }
   return (
     <View style={[styles.container]}>
       <View style={styles.ProductContainer}>
@@ -81,120 +30,47 @@ const CreateOrEditProducts = () => {
           showsVerticalScrollIndicator={true}
           style={{ borderRadius: 15 }}
           data={data}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <Pressable
-              onLongPress={() => {
-                setEditOpen({ id: item.id, onWhichClicked: true });
-                setDataEditing({
-                  id: item.id,
-                  productName: item.ProductName,
-                  productQuality: item.Quality,
-                  productQuantity: item.Quantity,
-                });
-              }}
-              style={[styles.SingleItem]}
-            >
+            <Pressable style={[styles.SingleItem]}>
               {/* For Product details */}
               <View style={styles.ProductDetails}>
                 {/* Product Name */}
                 <View style={styles.ProductNameContainer}>
                   <Text style={styles.ProductHeadingName}>Product</Text>
-                  {EditOpen.id === item.id && EditOpen.onWhichClicked ? (
-                    <TextInput
-                      style={[styles.ProductDataName, { color: '#000000' }]}
-                      value={dataEditing.productName}
-                      onChangeText={value =>
-                        handleOnChangeData('productName', value)
-                      }
-                    />
-                  ) : (
-                    <Text style={styles.ProductDataName}>
-                      {item.ProductName.length > 6
-                        ? item.ProductName.slice(0, 6) + '...'
-                        : item.ProductName}
-                    </Text>
-                  )}
+                  <Text style={styles.ProductDataName}>
+                    {item.ProductName.length > 6
+                      ? item.ProductName.slice(0, 6) + '...'
+                      : item.ProductName}
+                  </Text>
                 </View>
                 {/* Product Quantity */}
                 <View style={styles.ProductQuantityContainer}>
                   <Text style={styles.ProductHeadingQuantity}>
-                    Quantity({item.QuantityType})
-                  </Text>
-                  {EditOpen.id === item.id && EditOpen.onWhichClicked ? (
-                    <TextInput
-                      keyboardType="numeric"
-                      style={[styles.ProductDataQuantity, { color: '#000000' }]}
-                      value={
-                        dataEditing.productQuantity !== null
-                          ? dataEditing.productQuantity.toString()
-                          : ''
-                      }
-                      onChangeText={value =>
-                        handleOnChangeData('productQuantity', value)
-                      }
-                    />
-                  ) : (
-                    <Text style={styles.ProductDataQuantity}>
-                      {item.Quantity}
+                    Qty
+                    <Text style={{ fontSize: 12, fontStyle: 'italic' }}>
+                      ({item.QuantityType})
                     </Text>
-                  )}
+                  </Text>
+
+                  <Text style={styles.ProductDataQuantity}>
+                    {item.Quantity}
+                  </Text>
                 </View>
                 {/* Product Quality */}
                 <View style={styles.ProductQualityContainer}>
                   <Text style={styles.ProductHeadingQuality}>Quality</Text>
-                  {EditOpen.id === item.id && EditOpen.onWhichClicked ? (
-                    <TextInput
-                      style={[styles.ProductDataQuality, { color: '#00000' }]}
-                      value={dataEditing.productQuality}
-                      onChangeText={value =>
-                        handleOnChangeData('productQuality', value)
-                      }
-                    />
-                  ) : (
-                    <Text style={styles.ProductDataQuality}>
-                      {item.Quality}
-                    </Text>
-                  )}
+
+                  <Text style={styles.ProductDataQuality}>{item.Quality}</Text>
+                </View>
+                {/* Product Price */}
+                <View style={styles.ProductPriceContainer}>
+                  <Text style={styles.ProductHeadingPrice}>Price</Text>
+
+                  <Text style={styles.ProductDataPrice}>{item.Price}</Text>
                 </View>
               </View>
-              {/* For edit and delete button */}
-              {/* For edit and delete button */}
               <View style={styles.ProductButtons}>
-                {/* Edit Button */}
-                {EditOpen.id === item.id && EditOpen.onWhichClicked ? (
-                  <Pressable
-                    onPress={() => {
-                      setEditOpen({ id: item.id, onWhichClicked: false });
-                      handleOnSubmitData();
-                    }}
-                    style={({ pressed }) => [
-                      styles.editBtn,
-                      pressed && { backgroundColor: '#11c20eff' },
-                    ]}
-                  >
-                    <Feather name="check" size={25} color="#000000c2" />
-                  </Pressable>
-                ) : (
-                  <Pressable
-                    onPress={() => {
-                      setEditOpen({ id: item.id, onWhichClicked: true });
-                      setDataEditing({
-                        id: item.id,
-                        productName: item.ProductName,
-                        productQuality: item.Quality,
-                        productQuantity: item.Quantity,
-                      });
-                    }}
-                    style={({ pressed }) => [
-                      styles.editBtn,
-                      pressed && { backgroundColor: '#11c20eff' },
-                    ]}
-                  >
-                    <AntDesign name="edit" size={20} color="#000000c2" />
-                  </Pressable>
-                )}
-
                 <Pressable
                   style={({ pressed }) => [
                     styles.deleteBtn,
@@ -239,29 +115,31 @@ const styles = StyleSheet.create({
   SingleItem: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,
     backgroundColor: '#b9b9b98d',
+    paddingHorizontal: '1%',
   },
   ProductDetails: {
     borderRadius: 12,
-    width: '80%',
+    width: '90%',
     flexDirection: 'row',
     paddingHorizontal: '2%',
     paddingVertical: '3%',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    marginRight: 5,
   },
   ProductNameContainer: {
-    width: '30%',
+    width: '22.5%',
   },
   ProductQuantityContainer: {
-    justifyContent: 'flex-start',
-    marginRight: '5%',
+    justifyContent: 'center',
+    width: '22.5%',
   },
   ProductQualityContainer: {
-    width: '30%',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    width: '22.5%',
   },
   ProductHeadingName: { textAlign: 'left', color: '#181515e0' },
   ProductDataName: { fontSize: 17, fontWeight: 'bold', textAlign: 'left' },
@@ -277,12 +155,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'flex-start',
   },
-
-  editBtn: {
-    borderRadius: 50,
-    backgroundColor: '#0fe80bff',
-    padding: 5,
-  },
   deleteBtn: {
     borderRadius: 50,
     backgroundColor: '#ff0000ff',
@@ -293,5 +165,19 @@ const styles = StyleSheet.create({
     gap: 5,
     justifyContent: 'flex-start',
     width: '20%',
+  },
+  ProductPriceContainer: {
+    width: '22.5%',
+
+    alignItems: 'center',
+  },
+  ProductHeadingPrice: {
+    justifyContent: 'center',
+  },
+  ProductDataPrice: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

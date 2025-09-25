@@ -4,10 +4,12 @@ import NoDataAvailable from '../Common/NoDataAvailable';
 
 const LimitedProducts = () => {
   const { data } = useSelector(state => state.data);
-  const sortedData = [...data].sort((a, b) => a.Quantity - b.Quantity);
+  console.log(data);
+  
+  const sortedData = data.sort((a, b) => a.Quantity - b.Quantity);
   const trueLimitedProducts = sortedData?.filter(item => item.Quantity < 15);
-  if (data.length === 0) {
-    return <NoDataAvailable />;
+if (trueLimitedProducts.length === 0) {
+    return <NoDataAvailable text=""/>;
   }
   return (
     <View style={[styles.container]}>
