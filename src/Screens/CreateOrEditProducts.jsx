@@ -15,7 +15,7 @@ const CreateOrEditProducts = () => {
   const dispatch = useDispatch();
   const { data } = useSelector(state => state.data);
   if (data.length === 0) {
-    return <NoDataAvailable />;
+    return <NoDataAvailable text="No Products Added"/>;
   }
   const handleOnDeleteData = id => {
     const afterDeleteProducts = data.filter(item => item.id !== id);

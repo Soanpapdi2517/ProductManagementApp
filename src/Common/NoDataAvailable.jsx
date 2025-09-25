@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const NoDataAvailable = () => {
+const NoDataAvailable = ({text}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>No Products Added!!</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 };

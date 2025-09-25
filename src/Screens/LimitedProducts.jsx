@@ -9,7 +9,7 @@ const LimitedProducts = () => {
   const sortedData = data.sort((a, b) => a.Quantity - b.Quantity);
   const trueLimitedProducts = sortedData?.filter(item => item.Quantity < 15);
 if (trueLimitedProducts.length === 0) {
-    return <NoDataAvailable text=""/>;
+    return <NoDataAvailable text="No Limited Products"/>;
   }
   return (
     <View style={[styles.container]}>
