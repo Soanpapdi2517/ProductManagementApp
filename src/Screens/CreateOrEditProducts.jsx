@@ -69,7 +69,6 @@ const SwipeableItem = ({ item, onDelete, onEdit }) => {
   const handleEdit = () => {
     translateX.value = withSpring(-120);
     if (onEdit) {
-      console.log('Edit button clicked2');
       onEdit(item);
     }
   };
@@ -154,7 +153,6 @@ const CreateOrEditProducts = () => {
   };
 
   const handleOnEditData = item => {
-    console.log('Edit button clicked');
     dispatch(setFocusedData(item));
     navigation.navigate('Edit Details');
   };

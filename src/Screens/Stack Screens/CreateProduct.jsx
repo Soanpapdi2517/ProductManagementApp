@@ -18,7 +18,6 @@ import { useNavigation } from '@react-navigation/native';
 import { addProduct } from '../../Slices/dataSlice';
 const CreateProduct = () => {
   let { data } = useSelector(state => state.data);
-  console.log(typeof data);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   // Quantity Type Data DropDown (

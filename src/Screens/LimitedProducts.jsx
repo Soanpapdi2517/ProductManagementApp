@@ -8,7 +8,6 @@ const LimitedProducts = () => {
   const { data } = useSelector(state => state.data);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  console.log(data);
 
   const sortedData = [...data].sort((a, b) => a.Quantity - b.Quantity);
   const trueLimitedProducts = sortedData?.filter(item => item.Quantity < 15);

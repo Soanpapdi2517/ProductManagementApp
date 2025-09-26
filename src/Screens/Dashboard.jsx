@@ -6,9 +6,7 @@ import { setFocusedData } from '../Slices/dataSlice';
 import { useNavigation } from '@react-navigation/native';
 const Dashboard = () => {
   let { data, focusedData } = useSelector(state => state.data);
-  data.map((item, index) => console.log('item and index', item, index));
 
-  console.log('came back to dashboard', data);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   if (data.length === 0) {
@@ -28,7 +26,6 @@ const Dashboard = () => {
             <Pressable
               onPress={() => {
                 dispatch(setFocusedData(item));
-                console.log(focusedData);
                 navigation.navigate('Product Details');
               }}
               style={({ pressed }) => [
