@@ -133,9 +133,7 @@ const CreateProduct = () => {
       newProductData;
     if (
       !image ||
-      !Quality ||
       !Quantity ||
-      !QuantityType ||
       !ProductName ||
       !Price
     ) {
