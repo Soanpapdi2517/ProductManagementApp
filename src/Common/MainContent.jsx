@@ -6,10 +6,8 @@ import CreateProduct from '../Screens/Stack Screens/CreateProduct';
 import ProductDetail from '../Screens/Stack Screens/ProductDetail';
 import { createStackNavigator } from '@react-navigation/stack';
 import { HeaderBackButton } from '@react-navigation/elements';
-import { useDispatch } from 'react-redux';
-import { setFocusedData } from '../Slices/dataSlice';
+import EditingScreen from "../Screens/Stack Screens/EditingScreen"
 const MainContent = () => {
-  const dispatch = useDispatch();
   const Stack = createStackNavigator();
   // color scheme dark or light
   return (
@@ -41,6 +39,17 @@ const MainContent = () => {
                 }}
               />
             ),
+          })}
+        />
+        <Stack.Screen
+          name="Edit Details"
+          component={EditingScreen}
+          options={({navigation})=> ({
+            headerShown: true,
+            headerStyle: {borderRadius: 12},
+            headerLeft: ({props})=> (
+              <HeaderBackButton {...props} onPress={()=> {navigation.goBack()}}/>
+            )
           })}
         />
       </Stack.Navigator>

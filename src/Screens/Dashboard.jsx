@@ -6,12 +6,13 @@ import { setFocusedData } from '../Slices/dataSlice';
 import { useNavigation } from '@react-navigation/native';
 const Dashboard = () => {
   let { data, focusedData } = useSelector(state => state.data);
+  data.map((item, index) => console.log('item and index', item, index));
 
   console.log('came back to dashboard', data);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   if (data.length === 0) {
-    return <NoDataAvailable text="No Products Added"/>;
+    return <NoDataAvailable text="No Products Added" />;
   }
 
   return (
@@ -78,7 +79,6 @@ const Dashboard = () => {
               {/* Product Price */}
               <View style={styles.ProductPriceContainer}>
                 <Text style={styles.ProductHeadingPrice}>Price</Text>
-
                 <Text style={styles.ProductDataPrice}>{item.Price}</Text>
               </View>
             </Pressable>
@@ -128,16 +128,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ProductHeadingName: { textAlign: 'left', color: '#181515e0' },
-  ProductDataName: { fontSize: 17, fontWeight: 'bold', textAlign: 'left' },
+  ProductDataName: { fontSize: 15, fontWeight: 'bold', textAlign: 'left' },
   ProductHeadingQuantity: { textAlign: 'center', color: '#181515e0' },
   ProductDataQuantity: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   ProductHeadingQuality: { textAlign: 'right', color: '#181515e0' },
   ProductDataQuality: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 'bold',
     alignItems: 'flex-start',
   },
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ProductDataPrice: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 'bold',
     justifyContent: 'center',
     alignItems: 'center',

@@ -9,7 +9,10 @@ const dataSlice = createSlice({
   initialState: initialState,
   reducers: {
     setData: (state, value) => {
-      state.data.push(value.payload)
+      state.data = value.payload;
+    },
+    addProduct: (state, value) => {
+      state.data.push(value.payload);
     },
     setFocusedData: (state, value) => {
       state.focusedData = value.payload;
@@ -17,5 +20,5 @@ const dataSlice = createSlice({
   },
 });
 
-export const { setData, setFocusedData, updateData } = dataSlice.actions;
+export const { setData, setFocusedData, addProduct } = dataSlice.actions;
 export default dataSlice.reducer;

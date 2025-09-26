@@ -15,7 +15,7 @@ import Upload from 'react-native-vector-icons/Feather';
 import DropDownPicker from 'react-native-dropdown-picker';
 import CustomAlert from '../../Modal/CustomModal';
 import { useNavigation } from '@react-navigation/native';
-import { setData, updateData } from '../../Slices/dataSlice';
+import { addProduct } from '../../Slices/dataSlice';
 const CreateProduct = () => {
   let { data } = useSelector(state => state.data);
   console.log(typeof data);
@@ -142,7 +142,7 @@ const CreateProduct = () => {
     ) {
       return setModal({ modalState: true, modalFor: 'save' });
     } else {
-      dispatch(setData(newProductData));
+      dispatch(addProduct(newProductData));
       navigation.goBack();
     }
   };
