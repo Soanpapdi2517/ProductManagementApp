@@ -79,7 +79,14 @@ You can download the release APK directly from Google Drive:
 
 ## 📸 Preview (Optional)
 
-Add screenshots here when available to show UI.
+### 🏠 Dashboard
+![Dashboard Screen](assets/screenshot/Dashboard.png)
+
+### 🧾 Limited Products
+![Limited Products Screen](assets/screenshot/limitedProduct.png)
+
+### 🛠️ Create Product
+![Create Product Screen](assets/screenshots/CreateOrEditProducts.png)
 
 ---
 
