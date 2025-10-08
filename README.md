@@ -82,7 +82,7 @@ You can download the release APK directly from Google Drive:
 ### 🏠 Dashboard
 <p align="center">
   <img src="https://drive.google.com/uc?export=view&id=1R_3lROMXQYrwtcOayD6KflBSoWmDawr6" width="300" height="600" />
-  <img src="assets/screenshot/limitedproducts.png" width="300" height="600" />
+  <img src="/assets/Screenshot/limitedProducts.png" width="300" height="600" />
 
 </p>
 ### 🧾 Limited Products
