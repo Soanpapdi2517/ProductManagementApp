@@ -73,7 +73,7 @@ UI Components (Screens)
 
 You can download the release APK directly from Google Drive:
 
-👉 [**Download Product Management App**](https://drive.google.com/)
+👉 [**Download Product Management App**](https://drive.google.com/file/d/1u9bFFOy1iatEQkhb22VXFcpJZRQO1LOy/view?usp=drive_link)
 
 ---
 
