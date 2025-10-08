@@ -1,488 +1,147 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" align="center" width="30%">
+  <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" align="center" width="30%">
 </p>
-<p align="center"><h1 align="center">PRODUCTMANAGEMENTAPP</h1></p>
-<p align="center">
-</p>
-<p align="center">
-	<img src="https://img.shields.io/github/license/Soanpapdi2517/ProductManagementApp?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-	<img src="https://img.shields.io/github/last-commit/Soanpapdi2517/ProductManagementApp?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/Soanpapdi2517/ProductManagementApp?style=default&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/Soanpapdi2517/ProductManagementApp?style=default&color=0080ff" alt="repo-language-count">
-</p>
-<p align="center"><!-- default option, no dependency badges. -->
-</p>
-<p align="center">
-	<!-- default option, no dependency badges. -->
-</p>
-<br>
+<h1 align="center">📱 Product Management App</h1>
 
-##  Table of Contents
-
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ Project Structure](#-project-structure)
-  - [ Project Index](#-project-index)
-- [ Getting Started](#-getting-started)
-  - [ Prerequisites](#-prerequisites)
-  - [ Installation](#-installation)
-  - [ Usage](#-usage)
-- [ Download Link Here](#-download_App_Here)
+<p align="center">
+  <img src="https://img.shields.io/github/license/Soanpapdi2517/ProductManagementApp?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+  <img src="https://img.shields.io/github/last-commit/Soanpapdi2517/ProductManagementApp?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+  <img src="https://img.shields.io/github/languages/top/Soanpapdi2517/ProductManagementApp?style=default&color=0080ff" alt="repo-top-language">
+  <img src="https://img.shields.io/github/languages/count/Soanpapdi2517/ProductManagementApp?style=default&color=0080ff" alt="repo-language-count">
+</p>
 
 ---
 
-##  Features
+## 🧭 Overview
 
-<code>❯ REPLACE-ME</code>
+**ProductManagementApp** is a complete **React Native CLI application** designed to manage products efficiently.  
+It features **real-time product monitoring**, **categorization based on quantity**, and **CRUD functionalities** (Create, Read, Update, Delete) — all powered by **Redux Toolkit** and **Async Storage** for seamless state persistence.
+
+---
+
+## ⚙️ Features
+
+✅ **Dashboard with Product Status Colors**  
+- 🟢 Green → Products with quantity **≥ 40**  
+- 🟡 Yellow → Products with quantity **> 15**  
+- 🔴 Red → Products with quantity **< 15**
+
+✅ **Limited Products Screen**  
+- Displays only **low-stock items (< 15 quantity)** for quick restocking decisions.
+
+✅ **Create & Edit Products Screen**  
+- Add new products with:
+  - Product Name  
+  - Product Price  
+  - Product Quantity  
+  - Product Quantity Type (kg, g, pcs, etc.)  
+  - Product Quality  
+  - Product Image Upload  
+- Delete or edit existing products easily.  
+- HeaderRight ➕ navigates to *Create Product* form.  
+- Modal confirmation on Cancel (Yes/No).  
+- Redux Toolkit for centralized state management.  
+- Async Storage to persist data locally.
+
+✅ **Product Detail Screen**  
+- Opens from Dashboard to display detailed information for each product.
+
+✅ **Smooth UI Navigation**  
+- Implemented using **React Navigation (Bottom Tabs + Stack Navigator)**.
+
+✅ **Offline Persistence**  
+- State and products remain saved locally even after app restarts.
 
 ---
 
-##  Project Structure
+## 🗂 Project Structure
 
-```sh
-└── ProductManagementApp/
-    ├── App.jsx
-    ├── Gemfile
-    ├── README.md
-    ├── __tests__
-    │   └── App.test.tsx
-    ├── android
-    │   ├── app
-    │   ├── build.gradle
-    │   ├── gradle
-    │   ├── gradle.properties
-    │   ├── gradlew
-    │   ├── gradlew.bat
-    │   └── settings.gradle
-    ├── app.json
-    ├── babel.config.js
-    ├── index.js
-    ├── ios
-    │   ├── .xcode.env
-    │   ├── Podfile
-    │   ├── ProductManagementApp
-    │   └── ProductManagementApp.xcodeproj
-    ├── jest.config.js
-    ├── metro.config.js
-    ├── package-lock.json
-    ├── package.json
-    ├── src
-    │   ├── Common
-    │   ├── Modal
-    │   ├── Navigators
-    │   ├── Reducer
-    │   ├── Screens
-    │   ├── Slices
-    │   └── Store
-    └── tsconfig.json
-```
+```bash
+ProductManagementApp/
+├── android/
+├── ios/
+├── src/
+│   ├── Common/
+│   ├── Modal/
+│   ├── Navigators/
+│   ├── Reducer/
+│   ├── Screens/
+│   ├── Slices/
+│   └── Store/
+├── App.jsx
+├── index.js
+├── package.json
+└── README.md
+🚀 Tech Stack
+Category	Technology
+Framework	React Native CLI
+State Management	Redux Toolkit
+Local Storage	Async Storage
+Navigation	React Navigation (Bottom Tab + Stack)
+Styling	React Native StyleSheet
+Testing	Jest
+Build Tool	Gradle
+🧩 Installation & Setup
+Prerequisites
 
+Node.js installed
 
-###  Project Index
-<details open>
-	<summary><b><code>PRODUCTMANAGEMENTAPP/</code></b></summary>
-	<details> <!-- __root__ Submodule -->
-		<summary><b>__root__</b></summary>
-		<blockquote>
-			<table>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/package-lock.json'>package-lock.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/app.json'>app.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/tsconfig.json'>tsconfig.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/App.jsx'>App.jsx</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/babel.config.js'>babel.config.js</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/index.js'>index.js</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/Gemfile'>Gemfile</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/package.json'>package.json</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/metro.config.js'>metro.config.js</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/jest.config.js'>jest.config.js</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			</table>
-		</blockquote>
-	</details>
-	<details> <!-- __tests__ Submodule -->
-		<summary><b>__tests__</b></summary>
-		<blockquote>
-			<table>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/__tests__/App.test.tsx'>App.test.tsx</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			</table>
-		</blockquote>
-	</details>
-	<details> <!-- ios Submodule -->
-		<summary><b>ios</b></summary>
-		<blockquote>
-			<table>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/Podfile'>Podfile</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			</table>
-			<details>
-				<summary><b>ProductManagementApp</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp/PrivacyInfo.xcprivacy'>PrivacyInfo.xcprivacy</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp/LaunchScreen.storyboard'>LaunchScreen.storyboard</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp/AppDelegate.swift'>AppDelegate.swift</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp/Info.plist'>Info.plist</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-					<details>
-						<summary><b>Images.xcassets</b></summary>
-						<blockquote>
-							<table>
-							<tr>
-								<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp/Images.xcassets/Contents.json'>Contents.json</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
-							</tr>
-							</table>
-							<details>
-								<summary><b>AppIcon.appiconset</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp/Images.xcassets/AppIcon.appiconset/Contents.json'>Contents.json</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>ProductManagementApp.xcodeproj</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp.xcodeproj/project.pbxproj'>project.pbxproj</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-					<details>
-						<summary><b>xcshareddata</b></summary>
-						<blockquote>
-							<details>
-								<summary><b>xcschemes</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/ios/ProductManagementApp.xcodeproj/xcshareddata/xcschemes/ProductManagementApp.xcscheme'>ProductManagementApp.xcscheme</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
-	<details> <!-- src Submodule -->
-		<summary><b>src</b></summary>
-		<blockquote>
-			<details>
-				<summary><b>Modal</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Modal/CustomModal.jsx'>CustomModal.jsx</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>Navigators</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Navigators/BottomTabNavigator.jsx'>BottomTabNavigator.jsx</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>Store</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Store/store.js'>store.js</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>Reducer</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Reducer/index.js'>index.js</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>Common</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Common/MainContent.jsx'>MainContent.jsx</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Common/NoDataAvailable.jsx'>NoDataAvailable.jsx</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>Slices</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Slices/dataSlice.js'>dataSlice.js</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Slices/themeSlice.js'>themeSlice.js</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-			<details>
-				<summary><b>Screens</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Screens/LimitedProducts.jsx'>LimitedProducts.jsx</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Screens/CreateOrEditProducts.jsx'>CreateOrEditProducts.jsx</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Screens/Dashboard.jsx'>Dashboard.jsx</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-					<details>
-						<summary><b>Stack Screens</b></summary>
-						<blockquote>
-							<table>
-							<tr>
-								<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Screens/Stack Screens/ProductDetail.jsx'>ProductDetail.jsx</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Screens/Stack Screens/EditingScreen.jsx'>EditingScreen.jsx</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/src/Screens/Stack Screens/CreateProduct.jsx'>CreateProduct.jsx</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
-							</tr>
-							</table>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
-	<details> <!-- android Submodule -->
-		<summary><b>android</b></summary>
-		<blockquote>
-			<table>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/gradlew.bat'>gradlew.bat</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/build.gradle'>build.gradle</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/settings.gradle'>settings.gradle</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			</table>
-			<details>
-				<summary><b>app</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/app/debug.keystore'>debug.keystore</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/app/proguard-rules.pro'>proguard-rules.pro</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/app/build.gradle'>build.gradle</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
-					</tr>
-					</table>
-					<details>
-						<summary><b>src</b></summary>
-						<blockquote>
-							<details>
-								<summary><b>main</b></summary>
-								<blockquote>
-									<details>
-										<summary><b>java</b></summary>
-										<blockquote>
-											<details>
-												<summary><b>com</b></summary>
-												<blockquote>
-													<details>
-														<summary><b>productmanagementapp</b></summary>
-														<blockquote>
-															<table>
-															<tr>
-																<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/app/src/main/java/com/productmanagementapp/MainApplication.kt'>MainApplication.kt</a></b></td>
-																<td><code>❯ REPLACE-ME</code></td>
-															</tr>
-															<tr>
-																<td><b><a href='https://github.com/Soanpapdi2517/ProductManagementApp/blob/master/android/app/src/main/java/com/productmanagementapp/MainActivity.kt'>MainActivity.kt</a></b></td>
-																<td><code>❯ REPLACE-ME</code></td>
-															</tr>
-															</table>
-														</blockquote>
-													</details>
-												</blockquote>
-											</details>
-										</blockquote>
-									</details>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
-</details>
+Android Studio (for emulator or physical device testing)
 
----
-##  Getting Started
+React Native CLI configured
 
-###  Prerequisites
+Java SDK and Gradle setup
 
-Before getting started with ProductManagementApp, ensure your runtime environment meets the following requirements:
+Steps
+# Clone repository
+git clone https://github.com/Soanpapdi2517/ProductManagementApp
 
-- **Programming Language:** JavaScript
-- **Package Manager:** Npm, Bundler, Gradle
-- **Container Runtime:** Podman
+# Move into folder
+cd ProductManagementApp
 
+# Install dependencies
+npm install
 
-###  Installation
+# Start Metro bundler
+npm start
 
-Install ProductManagementApp using one of the following methods:
+# Run on Android
+npx react-native run-android
 
-**Build from source:**
+📲 Screens Overview
+Screen	Description
+Dashboard	Displays all products color-coded by quantity
+Limited Products	Shows only products with less than 15 quantity
+Create/Edit Products	Add, update, or delete products
+Create Product (Stack)	Form for creating new products
+Edit Product (Stack)	Modify product details (except image)
+Product Details (Stack)	Displays product-specific details
+🧠 State Management Flow
+Redux Toolkit Slice (dataSlice.js)
+        ↓
+Store (store.js)
+        ↓
+AsyncStorage (Persisted State)
+        ↓
+UI Components (Screens)
 
-1. Clone the ProductManagementApp repository:
-```sh
-❯ git clone https://github.com/Soanpapdi2517/ProductManagementApp
-```
+📦 Download App
 
-2. Navigate to the project directory:
-```sh
-❯ cd ProductManagementApp
-```
+You can download the release APK directly from Google Drive:
 
-3. Install the project dependencies:
+👉 Download Product Management App
 
+📸 Preview (Optional)
 
-**Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
+Add screenshots here when available to show UI.
 
-```sh
-❯ npm install
-```
-**To Run on Android Emulator 
+🧑‍💻 Author
 
+👤 Sonu Yadav
+📧 Connect on LinkedIn
 
+💻 Full Stack Developer | React | React Native | MERN | DevOps Enthusiast
 
+🪪 License
 
-###  Usage
-Run ProductManagementApp using the following command:
-**Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
-
-```sh
-❯ npm start
-```
-
-
-**Using `bundler`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-RUN-COMMAND-HERE'
-```
-
-
-**Using `gradle`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-RUN-COMMAND-HERE'
-```
-
-
-**Using `podman`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-RUN-COMMAND-HERE'
-```
-## download_App_Here
-- Download the App from the below google drive link
-- https://drive.google.com/file/d/1u9bFFOy1iatEQkhb22VXFcpJZRQO1LOy/view?usp=sharing
+This project is licensed under the MIT License – feel free to use and modify.
