@@ -79,12 +79,13 @@ You can download the release APK directly from Google Drive:
 
 ## 📸 Preview (Optional)
 
-### 🏠 Dashboard
+### 🏠 Dashboard | ‼️ Limited Products | ✏️Create or Edit Products
 <p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1R_3lROMXQYrwtcOayD6KflBSoWmDawr6" width="300" height="600" />
-  <img src="https://drive.google.com/uc?export=view&id=1Tf3S-aLttms7hAKEqtzXpjuiCobGuy_Q" width="300" height="600" />
+  <img src="https://drive.google.com/uc?export=view&id=1R_3lROMXQYrwtcOayD6KflBSoWmDawr6" width="100" height="200" />
+  <img src="https://drive.google.com/uc?export=view&id=1Tf3S-aLttms7hAKEqtzXpjuiCobGuy_Q" width="100" height="200" />
+  <img src="https://drive.google.com/uc?export=view&id=1FsWxb1cFbXB8VmR5aCRVAOOtfD24SNGC" width="100" height="200" />
 </p>
-### 🧾 Limited Products
+### 
 
 ### 🛠️ Create Product
 ![Create Product Screen](assets/screenshots/CreateOrEditProducts.png)
