@@ -79,7 +79,7 @@ UI Components (Screens)
 
 ## Stack Navigation Screens
 
-### <--Create Products--->|<----File Picker in Create Product Screen--->|  
+### <-Create Products->|<----File Picker in Create Product Screen--->|  
 <p align="start">
   <img src="https://drive.google.com/uc?export=view&id=1jOLkBnvFGQjH2f3F5XfHe__RsiP3BP0O" width="200" height="400" />
   <img src="https://drive.google.com/uc?export=view&id=1q3lCSghIZicIbM9EDigJ0rxNzUVsA9tp" width="200" height="400" />
