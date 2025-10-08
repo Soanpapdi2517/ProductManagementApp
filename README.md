@@ -450,27 +450,7 @@ Install ProductManagementApp using one of the following methods:
 ```sh
 ❯ npm install
 ```
-
-
-**Using `bundler`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-INSTALL-COMMAND-HERE'
-```
-
-
-**Using `gradle`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-INSTALL-COMMAND-HERE'
-```
-
-
-**Using `podman`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-INSTALL-COMMAND-HERE'
-```
+**To Run on Android Emulator 
 
 
 
