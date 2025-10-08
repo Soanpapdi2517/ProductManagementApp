@@ -80,7 +80,7 @@ You can download the release APK directly from Google Drive:
 ## 📸 Preview (Optional)
 
 ### 🏠 Dashboard
-![Dashboard Screen](assets/screenshot/Dashboard.png)
+![Dashboard Screen](https://drive.google.com/uc?export=view&id=1R_3lROMXQYrwtcOayD6KflBSoWmDawr6)
 
 ### 🧾 Limited Products
 ![Limited Products Screen](assets/screenshot/limitedProduct.png)
